@@ -1,0 +1,196 @@
+/*Inclusao das fontes petrobras*/
+@font-face {
+  font-family: "petrobras_sanslight";
+  font-style: normal;
+  font-weight: normal;
+  src: url("petrobrassans_rg-webfont.woff");
+}
+
+@font-face {
+  font-family: "petrobras_sansbold";
+  font-style: normal;
+  font-weight: normal;
+  src: url("petrobrassans_bd-webfont.woff");
+}
+
+/* Introdução e texto comum*/
+p {
+    font-family: petrobras_sanslight;
+    text-align: justify;
+}
+
+h1 {
+  font-family: petrobras_sansbold;
+  text-align: center;
+  font-size: 22px;
+  padding-top: 10px;
+  margin-bottom: 5px;
+  color: rgba(0, 134, 58, 1);
+}
+
+table {
+
+}
+
+main {
+margin-top: 10px;
+padding: 5px;
+}
+.intro-title {
+  font-family: petrobras_sanslight;
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.intro-warning {
+  padding: 5px;
+  text-align: center;
+  background-color: rgba(253,199,46,1);
+  border-radius: 10px;
+}
+
+/*Barra lateral */
+
+#barra-lateral {
+  background-color: rgba(240,245,245,1);
+  border-width: 2px;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+.titulo-barra-lateral {
+  font-family: petrobras_sansbold;
+  text-align: center;
+  font-size: 18px;
+  padding-top: 10px;
+  margin-bottom: 5px;
+  color: rgba(0, 134, 58, 1);
+}
+
+.itens-barra-lateral {
+  font-family: petrobras_sansbold;
+  text-align: left;
+  font-size: 15px;
+  margin-bottom: 2px;
+  text-indent: 15px;
+  color: rgba(102, 102, 102, 1);
+}
+
+/* Estilo para o rodape*/
+footer {
+  margin-top: 10px;
+  background-color: rgba(0,133,66,1);
+}
+.footer-text {
+  color: rgba(255,255,255,1);
+  font-family: petrobras_sanslight;
+  text-align: center;
+  margin-bottom: 0px;
+}
+
+/* Mudança da barra de navegação */
+nav{
+  margin-top: 10px;
+}
+
+.bg-verdebr {
+  background-color: rgba(0,133,66,1) !important;
+}
+
+a.bg-verdebr:hover,
+a.bg-verdebr:focus,
+button.bg-verdebr:hover,
+button.bg-verdebr:focus {
+  background-color: rgba(0,133,66,1) !important;
+}
+
+.navbar-ioi .navbar-brand {
+  color: #fff;
+  font-family: petrobras_sansbold;
+}
+
+.navbar-ioi .navbar-brand:hover, .navbar-ioi .navbar-brand:focus {
+  color: #fff;
+}
+
+.navbar-ioi .navbar-nav .nav-link {
+  color: rgba(255, 255, 255, 1);
+  font-family: petrobras_sansbold;
+}
+
+.navbar-ioi .navbar-nav .nav-link:hover, .navbar-ioi .navbar-nav .nav-link:focus {
+  color: rgba(253,199,46,1);
+  font-family: petrobras_sansbold;
+}
+
+.navbar-ioi .navbar-nav .nav-link.disabled {
+  color: rgba(255, 255, 255, 1);
+}
+
+.navbar-ioi .navbar-nav .show > .nav-link,
+.navbar-ioi .navbar-nav .active > .nav-link,
+.navbar-ioi .navbar-nav .nav-link.show,
+.navbar-ioi .navbar-nav .nav-link.active {
+  color: #fff;
+}
+
+.navbar-ioi .navbar-toggler {
+  color: rgba(255, 0, 255, 1);
+  border-color: rgba(255, 255, 255, 1);
+  height: 1.5em;
+  padding: 0px;
+
+}
+
+.navbar-ioi .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+.navbar-ioi .navbar-text {
+  color: rgba(255, 255, 255, 1);
+  font-family: petrobras_sansbold;
+}
+
+.navbar-ioi .navbar-text a {
+  color: #fff;
+}
+
+.navbar-ioi .navbar-text a:hover, .navbar-ioi .navbar-text a:focus {
+  color: #fff;
+}
+
+
+#minhapesquisa {
+    background-image: url('/css/searchicon.png'); /* Add a search icon to input */
+    background-position: 10px 12px; /* Position the search icon */
+    background-repeat: no-repeat; /* Do not repeat the icon image */
+    width: 100%; /* Full-width */
+    font-size: 16px; /* Increase font-size */
+    padding: 12px 20px 12px 40px; /* Add some padding */
+    border: 1px solid #ddd; /* Add a grey border */
+    margin-bottom: 12px; /* Add some space below the input */
+}
+
+#minhatabela {
+    border-collapse: collapse; /* Collapse borders */
+    width: 100%; /* Full-width */
+    border: 1px solid #ddd; /* Add a grey border */
+    font-size: 18px; /* Increase font-size */
+}
+
+#minhatabela th, #minhatabela td {
+    text-align: left; /* Left-align text */
+    padding: 12px; /* Add padding */
+}
+
+#minhatabela tr {
+    /* Add a bottom border to all table rows */
+    border-bottom: 1px solid #ddd;
+}
+
+#minhatabela tr.header, #minhatabela tr:hover {
+    /* Add a grey background color to the table header and on hover */
+    background-color: #f1f1f1;
+}
