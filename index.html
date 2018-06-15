@@ -16,7 +16,7 @@
     <script src="bootstrap/js/bootstrap.min.js"></script>
 
     <!-- HABILITAR MENU IR PARA PAGINAS -->
-    <script type="text/javascript">
+    <script>
 
       function ir_para_pagina(destino){
         $.ajax({url: destino,
@@ -40,14 +40,14 @@
     <!-- CABEÇALHO -->
     <header class="row no-gutters">
       <div class="col-sm-8 col-md-8 col-lg-6 col-xl-6" >
-        <img src="images/bg_header_ioi.png" class="img-fluid" href="#" onclick="ir_para_pagina('pag_intro.php')">
+        <img src="images/bg_header_ioi.png" class="img-fluid" onclick="ir_para_pagina('pag_intro.php') alt="Portal Integração">
       </div>
       <div class="col-sm-4 col-md-4 col-lg-6 col-xl-4 align-self-end" style="margin-top: 10px;">
         <form autocomplete="off" class="row no-gutters justify-content-center" action="#">
           <div class="autocomplete" >
             <input id="myInput" class="form-control" type="text" name="pesquisarp" placeholder="Pesquisa" style="width: 300px;">
           </div>
-          <button type="submit" class="btn btn-outline-success"><img src="images/oie_transparent.png"</button>
+          <button type="submit" class="btn btn-outline-success"><img src="images/oie_transparent.png"> </button>
         </form>
 
         <!-- auto complete -->
