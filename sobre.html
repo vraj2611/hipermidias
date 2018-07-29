@@ -5,35 +5,71 @@
         <title>Sobre</title>
 
         <style media="screen">
-            .logo {
-                float: left;
-            }
-
-            .idiomas {
-                float: right;
-                position: relative;
-                bottom: 0px;
+            body {
+                margin: 0px;
             }
 
             header {
                 width: 100%;
-                background: yellow;
+                height: 100px;
+                background: linear-gradient(to right, black , black, black, green);
+                position: relative;
             }
 
+            header h1 {
+                text-align: center;
+                color: orange;
+                position: relative;
+                top: 30px;
+            }
+
+            .logo {
+                position: absolute;
+                height: 100%;
+            }
+
+            .idiomas {
+                width: 50px;
+                height: 30px;
+                position: absolute;
+                right: 5px;
+                bottom: 5px;
+            }
             nav {
                 width: 100%;
                 clear: both;
                 background: black;
                 color: white;
+                border-style: solid;
+                border-width: 3px 0px 3px 0px;
+                border-color: orange;
+                padding: 6px;
+                margin-bottom: 5px;
             }
 
+            nav ul {
+                margin: 0px;
+            }
             nav ul li{
                 display: inline;
-                margin: 10px;
+                margin: 10px 20px 10px 0px;
+            }
+
+            nav ul li a{
+                text-decoration: none;
+                font-size: 16px;
+                color: white;
+                font-weight: bold;
+            }
+
+            nav ul li a:hover{
+                color: orange;
             }
 
             main {
                 clear: both;
+                margin-bottom: 10px;
+                text-align: justify;
             }
 
             figure {
@@ -46,26 +82,46 @@
             }
 
             footer {
+                width: 100%;
                 clear: both;
-                background: red;
+                background: lightgray;
+                color: black;
+                border-style: solid;
+                border-width: 3px 0px 3px 0px;
+                border-color: gray;
+                padding: 6px;
+
             }
 
-            footer ul li {
+            footer ul {
+                margin: 0px;
+            }
+
+            footer ul li{
                 display: inline;
+                margin: 10px 0px 10px 30px;
+            }
+
+            footer ul li a{
+                text-decoration: none;
+                font-size: 16px;
+                color: black;
+                font-weight: bold;
+            }
+
+            footer ul li a:hover{
+                color: orange;
             }
         </style>
 
     </head>
     <body>
         <header>
-            <div class="logo">
-                    <img src="dclogo.png" alt="Logo DC" >
-            </div>
-            <div class="idiomas">
-                    <img src="brasil.png" alt="Portugues">
-            </div>
-
+            <img src="dclogo.png" alt="Logo DC" class="logo">
+            <h1>Dimensional Charts</h1>
+            <img src="brasil.png" alt="Portugues" class="idiomas">
         </header>
+
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>

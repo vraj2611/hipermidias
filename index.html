@@ -1,86 +1,182 @@
 <!DOCTYPE html>
-<html lang="pt-br" dir="ltr">
+<html lang="zxx" dir="ltr">
     <head>
         <meta charset="utf-8">
         <title>Index</title>
 
         <style media="screen">
-            .logo {
-                float: left;
-            }
 
-            .idiomas {
-                float: right;
-                position: relative;
-                bottom: 0px;
+            body {
+                margin: 0px;
             }
 
             header {
                 width: 100%;
-                background: yellow;
+                height: 100px;
+                background: linear-gradient(to right, black , black, black, green);
+                position: relative;
             }
 
+            header h1 {
+                text-align: center;
+                color: orange;
+                position: relative;
+                top: 30px;
+            }
+
+            .logo {
+                position: absolute;
+                height: 100%;
+            }
+
+            .idiomas {
+                width: 50px;
+                height: 30px;
+                position: absolute;
+                right: 5px;
+                bottom: 5px;
+            }
             nav {
                 width: 100%;
                 clear: both;
                 background: black;
                 color: white;
+                border-style: solid;
+                border-width: 3px 0px 3px 0px;
+                border-color: orange;
+                padding: 6px;
+                margin-bottom: 5px;
             }
 
+            nav ul {
+                margin: 0px;
+            }
             nav ul li{
                 display: inline;
-                margin: 10px;
+                margin: 10px 20px 10px 0px;
+            }
+
+            nav ul li a{
+                text-decoration: none;
+                font-size: 16px;
+                color: white;
+                font-weight: bold;
+            }
+
+            nav ul li a:hover{
+                color: orange;
             }
 
             main {
                 clear: both;
+                margin-bottom: 10px;
             }
 
             section{
-                width: 70%;
+                padding: 10px;
+                width: 63%;
                 background: white;
                 float: left;
+                text-align: justify;
             }
 
             aside {
-                width: 30%;
-                background: blue;
-                float: left;
+                width: 35%;
+                background: green;
+                float: right;
+                font-weight: bold;
+            }
+
+            aside ul li {
+                list-style: none;
+                color: white;
+            }
+
+            aside ul li::before {
+                content: "--- ";
             }
 
             aside h2 {
-                background: lightblue;
+                background: lightgreen;
             }
 
             .spotlight-bar{
-                background: green;
                 clear: both;
+                border-style: solid;
+                border-width: 3px 0px 0px 0px;
+                border-color: lightgray;
+                margin-top: 5px;
+            }
+
+            .spotlight-bar h1 {
+                margin: 5px 0px 5px 0px;
             }
 
             .spotlight-item {
                 float: left;
-                width: 33%;
-            }
-            footer {
-                clear: both;
-                background: red;
+                width: 32%;
+                border-style: solid;
+                border-width: 3px;
+                border-color: lightgray;
+                border-radius: 8px;
+                margin: 3px;
+                text-align: justify;
             }
 
-            footer ul li {
-                display: inline;
+            .spotlight-item img {
+                width: 100%;
+                height: 80px;
+                border-radius: 8px 8px 0px 0px;
             }
+
+            .spotlight-item h2{
+                margin: 0px;
+            }
+
+            .spotlight-item p {
+                padding: 5px;
+            }
+
+            footer {
+                width: 100%;
+                clear: both;
+                background: lightgray;
+                color: black;
+                border-style: solid;
+                border-width: 3px 0px 3px 0px;
+                border-color: gray;
+                padding: 6px;
+
+            }
+
+            footer ul {
+                margin: 0px;
+            }
+
+            footer ul li{
+                display: inline;
+                margin: 10px 0px 10px 30px;
+            }
+
+            footer ul li a{
+                text-decoration: none;
+                font-size: 16px;
+                color: black;
+                font-weight: bold;
+            }
+
+            footer ul li a:hover{
+                color: orange;
+            }
+
         </style>
 
     </head>
     <body>
         <header>
-            <div class="logo">
-                    <img src="dclogo.png" alt="Logo DC" >
-            </div>
-            <div class="idiomas">
-                    <img src="brasil.png" alt="Portugues">
-            </div>
-
+            <img src="dclogo.png" alt="Logo DC" class="logo">
+            <h1>Dimensional Charts</h1>
+            <img src="brasil.png" alt="Portugues" class="idiomas">
         </header>
         <nav>
             <ul>
@@ -94,19 +190,20 @@
             <section>
                 <h2>Titulo</h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
             </section>
             <aside class="">
                 <h2>Hot itens</h2>
                 <ul>
-                    <li>hotiten1</li>
-                    <li>hotiten2</li>
-                    <li>hotiten3</li>
+                    <li>Hot Item 1</li>
+                    <li>Hot Item 2</li>
+                    <li>Hot Item 3</li>
                 </ul>
                 <h2>New itens</h2>
                 <ul>
-                    <li>newiten1</li>
-                    <li>newiten2</li>
-                    <li>newiten3</li>
+                    <li>New Item 1</li>
+                    <li>New Item 2</li>
+                    <li>New Item 3</li>
                 </ul>
 
             </aside>
@@ -114,18 +211,18 @@
                 <h1>In the Spotlight</h1>
                 <div class="spotlight-item">
                     <img src="dclogo.png" alt="Logo DC" >
-                    <h2>spotlight item</h2>
-                    <p>asda ewqret adsas dad asda dsa sda d ads asd asdads</p>
+                    <h2>Spotlight item 1</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                 </div>
                 <div class="spotlight-item">
                     <img src="dclogo.png" alt="Logo DC" >
-                    <h2>spotlight item</h2>
-                    <p>asda ewqret adsas dad asda dsa sda d ads asd asdads</p>
+                    <h2>Spotlight item 2</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                 </div>
                 <div class="spotlight-item">
                     <img src="dclogo.png" alt="Logo DC" >
-                    <h2>spotlight item</h2>
-                    <p>asda ewqret adsas dad asda dsa sda d ads asd asdads</p>
+                    <h2>Spotlight item 3</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                 </div>
             </div>
         </main>
