@@ -89,6 +89,8 @@ public class Pedido {
 	}
 	
 	public List<Movimentacao> getMovimentacoes(){
+		DMMovimentacao dmmov = new DMMovimentacao();
+		this.movimentacoes = (List<Movimentacao>) dmmov.consultar(this);
 		return movimentacoes;
 	}
 

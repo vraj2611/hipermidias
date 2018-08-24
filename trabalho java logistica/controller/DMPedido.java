@@ -76,11 +76,9 @@ public class DMPedido extends DMConexao {
             }
             
             consultarSQL += " ORDER BY id_pedido ASC;";	
-            //System.out.println(consultarSQL);
             ResultSet result = statement.executeQuery(consultarSQL);
             Pedido novo;
             while (result.next()) {
-            	//System.out.println(result.getString("id_pedido"));
             	novo = new Pedido();
             	novo.setId(Integer.parseInt(result.getString("id_pedido")));
             	novo.setId_cliente(Integer.parseInt(result.getString("id_cliente")));

@@ -3,8 +3,11 @@ package view;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 import model.*;
 
@@ -16,8 +19,9 @@ public class TelaListarMovimentacao extends JFrame{
 	private JTextField tmov;
 	private JButton bConcluir, bNovaMov, bListarMovs, bLogoff;
 	private JPanel pInfo, pStatus;
-	private JTextArea tstatus;
+	private JTable tstatus;
 	private JScrollPane scroll;
+	private Funcionario funcionario;
 	
 	public TelaListarMovimentacao(Funcionario f){
 		
@@ -27,7 +31,8 @@ public class TelaListarMovimentacao extends JFrame{
 		this.setLayout(null);
 		this.setVisible(true);
 		this.setLocationRelativeTo(null);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE); 
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.funcionario = f;
 		
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		Image img = tk.getImage("../Logistica/src/images/executar.gif");
@@ -43,7 +48,6 @@ public class TelaListarMovimentacao extends JFrame{
 		bLogoff.setLocation(358,10);
 		this.add(bLogoff);
 		
-		//Painel Cliente 
 		pInfo = new JPanel();
 		pInfo.setSize(420,100);
 		pInfo.setLocation(10,40);
@@ -83,14 +87,7 @@ public class TelaListarMovimentacao extends JFrame{
 		pStatus.setLayout(null);
 		this.add(pStatus);
 		
-		tstatus = new JTextArea();
-		scroll = new JScrollPane(tstatus);
-		scroll.setSize(400, 160);
-		scroll.setLocation(10, 20);
-		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		tstatus.setEditable(true);
-		tstatus.setText(f.listarMovs());
-		pStatus.add(scroll);
+		exibirTabelaMovimentacoes();
 		
 		lid = new JLabel(f.getCargo() + ": " + f.getNome() + " - ID: " + f.getId());
 		lid.setSize(260,30);
@@ -107,7 +104,7 @@ public class TelaListarMovimentacao extends JFrame{
 				}
 				
 				if (e.getSource() == bListarMovs) {
-					tstatus.setText(f.listarMovs());
+					exibirTabelaMovimentacoes();
 				}
 			
 				if (e.getSource() == bNovaMov) {
@@ -127,5 +124,47 @@ public class TelaListarMovimentacao extends JFrame{
 		bLogoff.addMouseListener(ouv);
 	}
 
-	public void fechar(){ this.dispose();}
+	public void fechar(){
+		this.dispose();
+	}
+
+	private JTable criarTabela(List<Movimentacao> movs) {
+		JTable t = new JTable();
+		String[] colunas = {"ID","Motorista","Origem","Destino","Status"};
+		List<String[]> lista = new ArrayList<>();
+		
+		int x;
+		Movimentacao m;
+		String descr_status, end_destino, end_origem;
+		for (x=0; x < movs.size() ; x++){
+			m = movs.get(x);
+			
+			if (m.getStatus() == 0) {descr_status = "Em transito";} else {descr_status = "Concluido";}
+			if (m.getDestino().compareTo("Destino") != 0) {end_destino = "Centro " + m.getDestino();} else {end_destino = m.getDestino();}
+			if (m.getOrigem().compareTo("Origem") != 0) {end_origem = "Centro " + m.getOrigem();} else {end_origem = m.getOrigem();}
+			
+			lista.add(new String[]{
+				String.valueOf(m.getId()),
+				String.valueOf(m.getNome_motorista()),
+				end_origem,
+				end_destino,
+				descr_status
+			});
+		}	
+		DefaultTableModel model = new DefaultTableModel(lista.toArray(new String[lista.size()][]),colunas);
+		t.setModel(model);
+		return t;
+	}
+
+	private void exibirTabelaMovimentacoes(){
+		tstatus = criarTabela(funcionario.getMovs());
+		scroll = new JScrollPane(tstatus);
+		scroll.setSize(400, 160);
+		scroll.setLocation(10, 20);
+		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		pStatus.setBorder(BorderFactory.createTitledBorder("Movimentações: " + tstatus.getRowCount()));
+		pStatus.removeAll();
+		pStatus.add(scroll);
+	}
+
 }

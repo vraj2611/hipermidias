@@ -10,7 +10,7 @@ public class Cliente {
 	private String nome;
 	private String cpf_cnpj;
 	private String telefone;
-	private List<Pedido> pedidos = new ArrayList();
+	private List<Pedido> pedidos = new ArrayList<Pedido>();
 	
 	public Cliente(){}
 	
@@ -29,6 +29,11 @@ public class Cliente {
 		this.cpf_cnpj = cpf_cnpj;
 		DMCliente dmcliente = new DMCliente();
 		dmcliente.incluir(this);
+	}
+	
+	public Cliente consultar(String id){
+		DMCliente dmcliente = new DMCliente();
+		return dmcliente.consultar(id);      
 	}
 	
 	public int getId() {
@@ -57,65 +62,10 @@ public class Cliente {
 		this.telefone = telefone;
 	}
 
-	public int getQuantPedidos(){
-		return pedidos.size();
-	}
-	
-	public Cliente consultar(String id){
-		DMCliente dmcliente = new DMCliente();
-		return dmcliente.consultar(id);      
-	}
-
-	public String acompanharPedido(String id_pedido){
-		String lista = "Pedido " + id_pedido + " não encontrado!";
-		int id = Integer.parseInt(id_pedido);
-		int x, m;
-		Pedido p;
-		List<Movimentacao> movs;
-		Movimentacao mov;
-		String origem, destino, status;
-		for (x = 0 ; x < pedidos.size() ; x++){
-			p = pedidos.get(x);
-			if (p.getId() == id){
-				lista = "";
-				p.atualizarMovimentacoes();
-				movs = p.getMovimentacoes();
-				for (m=0; m < movs.size() ; m++){
-					mov = movs.get(m);
-					
-					if (mov.getOrigem().compareTo("Origem") == 0){
-						origem = p.getOrigem();
-					} else {
-						origem = "Centro " + mov.getOrigem();
-					}
-					
-					if (mov.getDestino().compareTo("Destino") == 0){
-						destino = p.getDestino();
-					} else {
-						destino = "Centro " + mov.getDestino();
-					}
-					
-					if (mov.getStatus() == 0) { status = "Em Transito"; } else { status = "Concluido";}
-					
-					lista += "De " + origem + " para " + destino + ". (" + status + ")\n"; 
-				}
-					
-			}
-		}	
-		return lista;
-	}
-	
-	public String listarPedidos(){
+	public List<Pedido> getPedidos(){
 		DMPedido dmpedido = new DMPedido();
 		this.pedidos = dmpedido.consultar(this); 
-		
-		int x;
-		Pedido p;
-		String lista = "ID\tOrigem\tDestino\tQuant\tStatus\n";
-		for (x=0; x < pedidos.size() ; x++){
-			p = pedidos.get(x);
-			lista += p.getId() + "\t" + p.getOrigem() + "\t" + p.getDestino() + "\t" + p.getQuant() + "\t" + p.getStatus() + "\n";
-		}
-		return lista;
+		return this.pedidos;
 	}
+	
 }

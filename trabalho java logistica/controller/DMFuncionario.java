@@ -2,6 +2,8 @@ package controller;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import model.*;
 
@@ -14,7 +16,14 @@ public class DMFuncionario extends DMConexao {
 		Funcionario f = new Funcionario();
         try {
         	Statement statement = DMConexao.getConnection().createStatement();
-            String consultarSQL = "SELECT f.*, c.descricao FROM funcionarios f JOIN cargos_func c ON f.id_cargo = c.id WHERE f.id = '" + id + "'";
+        	Date agora = new Date();
+        	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        	
+        	String inserirhora = "UPDATE funcionarios SET hr_acesso = '" + sdf.format(agora) + "' WHERE id = " + id + ";"; 
+        	System.out.println(inserirhora);
+        	statement.executeUpdate(inserirhora);
+        	
+        	String consultarSQL = "SELECT f.*, c.descricao FROM funcionarios f JOIN cargos_func c ON f.id_cargo = c.id WHERE f.id = '" + id + "'";
             ResultSet result = statement.executeQuery(consultarSQL);
             if (result.next()) {
             	f.setId(Integer.parseInt(result.getString("id")));
@@ -33,7 +42,7 @@ public class DMFuncionario extends DMConexao {
             statement.close();
             
         }
-        catch (SQLException e){ System.out.println("Problemas com o SQL de consulta de Pessoa Física!"); }
+        catch (SQLException e){ System.out.println("Problemas com o SQL para consultar funcionario!"); }
         return f;
 	}
 

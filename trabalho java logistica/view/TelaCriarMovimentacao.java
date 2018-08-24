@@ -3,8 +3,11 @@ package view;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 import model.*;
 
@@ -15,9 +18,9 @@ public class TelaCriarMovimentacao extends JFrame{
 	private JTextField tpedido, tdestino, tmotorista;
 	private JButton bCriar, bIncluir, bExcluir, bSair, bListarPedidos;
 	private JPanel pInfo, pTodos, pSelecao;
-	//private JTextArea ttodos, tselecao;
 	private JScrollPane scrollt, scrolls;
 	private JTable tselecao, ttodos;
+	private Funcionario funcionario;
 	
 	public TelaCriarMovimentacao(Funcionario f){
 		
@@ -28,6 +31,7 @@ public class TelaCriarMovimentacao extends JFrame{
 		this.setVisible(true);
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE); 
+		this.funcionario = f;
 		
 		Toolkit tk = Toolkit.getDefaultToolkit();
 		Image img = tk.getImage("../Logistica/src/images/executar.gif");
@@ -107,33 +111,16 @@ public class TelaCriarMovimentacao extends JFrame{
 		pSelecao.setLayout(null);
 		this.add(pSelecao);
 
-		tselecao = new JTable();
-		tselecao = f.listarTabelaSelecionados();
-		scrolls = new JScrollPane(tselecao);
-		scrolls.setSize(400, 110);
-		scrolls.setLocation(10, 20);
-		scrolls.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		new JScrollPane();
-		//tselecao.setEditable(true);
-		//tselecao = f.listarTabelaSelecionados();
-		pSelecao.add(scrolls);
+		exibirTabelaSelecionados();
 		
 		pTodos = new JPanel();
 		pTodos.setSize(420,200);
 		pTodos.setLocation(10,340);
-		pTodos.setBorder(BorderFactory.createTitledBorder("Pedidos disponíveis: " + f.getPedidos().size()));
+		pTodos.setBorder(BorderFactory.createTitledBorder("Pedidos disponíveis: 0"));
 		pTodos.setLayout(null);
 		this.add(pTodos);
 		
-		ttodos = new JTable();
-		ttodos = f.listarTabelaPedidos();
-		scrollt = new JScrollPane(ttodos);
-		scrollt.setSize(400, 160);
-		scrollt.setLocation(10, 20);
-		scrollt.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-		//ttodos.setEditable(true);
-		//ttodos.setText(f.listarPedidos());
-		pTodos.add(scrollt);
+		exibirTabelaPedidos();
 		
 		lid = new JLabel(f.getCargo() + ": " + f.getNome() + " - ID: " + f.getId());
 		lid.setSize(260,30);
@@ -146,28 +133,26 @@ public class TelaCriarMovimentacao extends JFrame{
 		class Ouvinte extends MouseAdapter {
 			public void mouseClicked(MouseEvent e) {
 				if (e.getSource() == bCriar) {
-					new Movimentacao(String.valueOf(f.getCentro()), tdestino.getText(), Integer.parseInt(tmotorista.getText()), f.getSelecionados());
+					new Movimentacao(
+						String.valueOf(funcionario.getCentro()),
+						tdestino.getText(),
+						Integer.parseInt(tmotorista.getText()),
+						funcionario.getSelecionados()
+					);
 				}
 				
 				if (e.getSource() == bListarPedidos) {
-					ttodos = f.listarTabelaPedidos();
-					atualizarTela();
+					exibirTabelaPedidos();
 				}
 			
 				if (e.getSource() == bIncluir) {
 					f.incluirPedidoNovaMov(tpedido.getText());
-					tselecao = f.listarTabelaSelecionados();
-					tselecao.repaint();
-					pSelecao.setBorder(BorderFactory.createTitledBorder("Pedidos selecionados: " + f.getSelecionados().size()));
-					pSelecao.remove(scrolls);
-					atualizarTela();
+					exibirTabelaSelecionados();
 				}
 				
 				if (e.getSource() == bExcluir) {
 					f.excluirPedidoNovaMov(tpedido.getText());
-					tselecao = f.listarTabelaSelecionados();
-					pSelecao.setBorder(BorderFactory.createTitledBorder("Pedidos selecionados: " + f.getSelecionados().size()));
-					atualizarTela();
+					exibirTabelaSelecionados();
 				}
 			
 				if (e.getSource() == bSair) {
@@ -184,10 +169,52 @@ public class TelaCriarMovimentacao extends JFrame{
 		bSair.addMouseListener(ouv);
 	}
 
-	public void fechar(){ this.dispose();}
-	
-	public void atualizarTela(){
-		scrolls.repaint();
-		this.repaint();
+	private void fechar(){
+		this.dispose();
 	}
+	
+	private JTable criarTabela(List<Pedido> pedidos) {
+		JTable t = new JTable();
+		String[] colunas = {"ID","Origem","Destino","Quant","Status"};
+		List<String[]> lista = new ArrayList<>();
+		
+		int x;
+		Pedido p;
+		for (x=0; x < pedidos.size() ; x++){
+			p = pedidos.get(x);
+			lista.add(new String[]{
+				String.valueOf(p.getId()),
+				String.valueOf(p.getOrigem()),
+				String.valueOf(p.getDestino()),
+				String.valueOf(p.getQuant()),
+				String.valueOf(p.getStatus())
+			});
+		}	
+		DefaultTableModel model = new DefaultTableModel(lista.toArray(new String[lista.size()][]),colunas);
+		t.setModel(model);
+		return t;
+	}
+	
+	private void exibirTabelaSelecionados(){
+		tselecao = criarTabela(funcionario.getSelecionados());
+		scrolls = new JScrollPane(tselecao);
+		scrolls.setSize(400, 110);
+		scrolls.setLocation(10, 20);
+		scrolls.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		pSelecao.setBorder(BorderFactory.createTitledBorder("Pedidos selecionados: " + tselecao.getRowCount()));
+		pSelecao.removeAll();
+		pSelecao.add(scrolls);
+	}
+		
+	private void exibirTabelaPedidos(){
+		ttodos = criarTabela(funcionario.getPedidos());
+		scrollt = new JScrollPane(ttodos);
+		scrollt.setSize(400, 160);
+		scrollt.setLocation(10, 20);
+		scrollt.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		pTodos.setBorder(BorderFactory.createTitledBorder("Pedidos disponíveis: " + ttodos.getRowCount()));
+		pTodos.removeAll();		
+		pTodos.add(scrollt);
+	}
+		
 }
