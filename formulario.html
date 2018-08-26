@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Formulario</title>
+
+    <style>
+        * {
+            line-height: 30px;
+            background-color: black;
+            color:grey;
+        }
+    </style>
+
+</head>
+<body>
+    <form id="formdados" action="formulario.html" method="POST">
+        <fieldset>
+            <legend>Dados Pessoais</legend>
+            Nome:
+            <input type="text" name="nome" id="nome">
+            Sobrenome:
+            <input type="text" name="sobrenome" id="sobrenome">
+            <br>
+            Sexo:
+            <input type="radio" name="sexo" id="sexo-m">
+            Masculino
+            <input type="radio" name="sexo" id="sexo-f">
+            Feminino
+            <br>
+            Nascimento:
+            <input type="date" name="nasc" id="nasc">
+            <br>
+            RG:
+            <input type="text" name="rg" id="rg">
+            <br>
+            CPF:
+            <input type="text" name="cpf" id="cpf">
+        </fieldset>
+        <fieldset>
+            <legend>Dados de Endereço</legend>
+            Rua:
+            <input type="text" name="rua" id="rua">
+            Número:
+            <input type="text" name="numero" id="numero">
+            <br>
+            Bairro:
+            <input type="text" name="bairro" id="bairro">
+            <br>
+            Cidade:
+            <input type="text" name="cidade" id="cidade">
+            <br>
+            Estado:
+            <select id="estado">
+                <option selected>RJ</option>
+                <option>SP</option>
+                <option>ES</option>
+                <option>MG</option>
+            </select>
+            <br>
+            CEP:
+            <input type="text" name="cep1" id="cep1">
+            -
+            <input type="text" name="cep2" id="cep2">
+        </fieldset>
+
+        <fieldset>
+            <legend>Dados de Login</legend>
+            E-mail:
+            <input type="text" name="email" id="email">
+            <br>
+            Confirmar E-mail:
+            <input type="text" name="confirmaremail" id="confirmaremail">
+            <br>
+            Login de usuário:
+            <input type="text" name="login" id="login">
+            <br>
+            Senha:
+            <input type="password" name="senha" id="senha">
+            <br>
+            Confirme a senha:
+            <input type="password" name="confirmarsenha" id="confirmarsenha">
+        </fieldset>
+
+        <fieldset>
+            <legend>Pesquisa</legend>
+            Você deseja trabalhar como Webmaster?
+            <input type="radio" name="trab" id="sim">Sim
+            <input type="radio" name="trab" id="nao">Não
+            <input type="radio" name="trab" id="talvez">Talvez
+            <input type="radio" name="trab" id="quemsabe">Quem Sabe
+            <br>
+            O que você deseja aprender?
+            <input type="radio" name="apr" id="html">HTML
+            <input type="radio" name="apr" id="css">CSS
+            <input type="radio" name="apr" id="js">JavaScript
+            <input type="radio" name="apr" id="django">Django
+            <br>
+            Deixe seu comentário:
+            <br>
+            <textarea name="comentario" rows="8" cols="50" id="comentario"></textarea>
+        </fieldset>
+
+        <button type="submit" id="enviar">Enviar</button>
+        <button type="reset" id="limpar">Limpar</button>
+
+    </form>
+
+    <!-- O formulário deverá conter as seguintes validações;
+
+    Não permitir que o formulário seja enviado com campos em branco. (4 pts)
+    Verificar se os campos CPF, RG, Número, CEP, possuem somente números; (1pt)
+    Verificar se os campos Nome, Sobrenome, Bairro, Cidade possuem somente letras; (1pt)
+    Verificar se os campos E-mail e Confirmação de E-mail possuem os mesmo valores. (1pt)
+    Verificar se os campos Senha e Confirmação de Senha possuem os mesmo valores. (1pt)
+    Verificar se o campo "O que você deseja aprender ?" possuí ao menos uma opção selecionada; (1pt)
+    O usuário deverá ser informado por meio de alerta qual erro encontrado durante a validação do formulário. (1pt)
+    -->
+    <script>
+    let fd = document.querySelector("#formdados");
+    fd.addEventListener("submit", validar, false);
+    
+    function validar (evt){
+        let erros = "";
+
+        //verifica selecionados
+        let id_sel = ["sexo", "trab", "apr"];
+        id_sel.forEach(function(x){
+            erros += verificaSelecao(x);
+        });
+                
+        //Verifica vazio nos inputs
+        let inputs = document.querySelectorAll("input");
+        for(x=0; x < inputs.length ; x++){
+            if (inputs[x].getAttribute("type") == "text"){
+                erros += verificaVazio(inputs[x]);
+            }
+        }
+        
+        //verifica vazio no textarea
+        erros += verificaVazio(document.querySelector("textarea"));
+
+        //verifica somente numeros
+        let id_numeros = ["cpf", "rg", "numero", "cep1", "cep2"];
+        id_numeros.forEach(function(id){
+            erros += verificaNumeros(document.getElementById(id));
+        });
+        
+        //verifica somente textos
+        let id_textos = ["nome", "sobrenome", "bairro", "cidade"];
+        id_textos.forEach(function(id){
+            erros += verificaTexto(document.getElementById(id));
+        });
+
+        //Compara email com confimar email
+        erros += verificaIguais(
+            document.querySelector("#email"),
+            document.querySelector("#confirmaremail")
+        )
+
+        //Compara senha com confirmar senha
+        erros += verificaIguais(
+            document.querySelector("#senha"),
+            document.querySelector("#confirmarsenha")
+        )
+        
+        //Exibe o alerta
+        if (erros.length > 0) {
+            alert(erros);
+            evt.preventDefault();
+        } else {
+            alert("Formulario enviado com sucesso!");
+        }
+    }
+
+    function verificaSelecao(name) {
+        let els = document.getElementsByName(name);
+        let s = 0;
+        for (x=0; x < els.length; x++){
+            if (els[x].checked) { s = 1; }
+        }
+        if (s == 0){
+            return "Campo " + name + " deve ter algum item selecionado.\n";
+        } else {
+            return "";
+        }
+    }
+
+    function verificaVazio(el) {
+        if (el.value.length == 0){
+            return "Campo " + el.id + " está vazio.\n";
+        } else {
+            return "";
+        }
+    }
+
+    function verificaIguais(el1, el2){
+        if (el1.value != el2.value) {
+            return "Campo " + el1.id + " está diferente do Campo " + el2.id + ".\n";
+        } else {
+            return "";
+        }
+    }
+
+    function verificaNumeros(el){
+        if (/\D/.test(el.value)) {
+            return "Campo " + el.id + " deve ter somente números.\n";
+        } else {
+            return "";
+        }
+    }
+
+    function verificaTexto(el){
+        if (/[0-9]/.test(el.value)) {
+            return "Campo " + el.id + " deve ter somente texto.\n";
+        } else {
+            return "";
+        }
+    }
+
+    </script>
+
+</body>
+</html>
