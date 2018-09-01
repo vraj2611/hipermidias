@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Reserva de Hotel</title>
+</head>
+<body>
+    <form action="#" id="reservaform">
+        Nome:
+        <input type="text" name="nome" id="nome">
+        <br>
+        E-mail:
+        <input type="text" name="email" id="email">
+        <br>
+        Confirmar E-mail:
+        <input type="text" name="confirmaremail" id="confirmaremail">
+        <br>
+        Data Chegada:
+        <input type="date" name="chegada" id="chegada" placeholder="yyyy-mm-dd">
+        <br>
+        Data Saida:
+        <input type="date" name="saida" id="saida" placeholder="yyyy-mm-dd">
+        <br>
+        Quant. Quartos:
+        <input type="number" name="quantquartos" id="quantquartos">
+        <br>
+        Número de Hospedes:
+        <input type="number" name="quanthospedes" id="quanthospedes">
+        <input type="submit" value="Enviar">
+    </form>
+
+<script>
+    document.getElementById('reservaform').addEventListener("submit", validar, false);
+
+    function validar(evt){
+        let erros = "";
+
+        //Verifica vazio nos inputs
+        let inputs = document.querySelectorAll("input");
+        for(x=0; x < inputs.length ; x++){
+            if (inputs[x].getAttribute("type") != "submit"){
+                erros += verificaVazio(inputs[x]);
+            }
+        }
+
+        //Valida email
+        erros += validaEmail();
+
+        //Verifica quantidade de diarias
+        let chegada = new Date(document.getElementById('chegada').value);
+        let saida = new Date(document.getElementById('saida').value);
+        if (saida <= chegada) {
+            erros += "Data de Saida deve ser maior que data de entrada";
+        }
+
+        let hosp = document.getElementById('quanthospedes').value
+        let quart = document.getElementById('quantquartos').value
+
+        //Verifica se quantidade de quartos é positivo
+        if (quart <= 0){ erros += "Quantidade de Quartos deve ser maior que 0\n"; }
+        
+        //Verifica se quantidade de hospedes é positivo
+        if (hosp <= 0){ erros += "Quantidade de Hospedes deve ser maior que 0\n"; }
+
+        //Verifica se quant de hospedes excede o maximo de 4 por quarto
+        if (hosp / quart > 4){
+            erros += "Quantidade de Hospedes excede o limite de 4 hospedes por quarto\n";
+        }
+
+        //Compara email com confimar email
+        erros += verificaIguais(
+            document.querySelector("#email"),
+            document.querySelector("#confirmaremail")
+        )
+
+        if (erros.length > 0) {
+            alert(erros);
+            evt.preventDefault();
+        } else {
+            calcularreserva();
+        }
+        
+        if (document.getElementById('nome').value = "teste"){
+            evt.preventDefault();
+        }    
+    }
+
+    function verificaVazio(el) {
+        if (el.value.length == 0){
+            return "Campo " + el.id + " está vazio.\n";
+        } else {
+            return "";
+        }
+    }
+
+    function validaEmail() {
+        email = document.getElementById('email').value;
+        tamanho = email.length;
+        arroba = email.indexOf('@');
+        ponto = email.indexOf(".");
+        arroba2 = email.lastIndexOf('@');
+        if (tamanho > ponto + 2
+        && ponto > arroba + 1
+        && arroba > 0 &&
+        arroba == arroba2) {
+            return "";
+        } else {
+            return "Campo e-mail não posui um e-mail valido\n";
+        }
+    }
+
+    function verificaIguais(el1, el2){
+        if (el1.value != el2.value) {
+            return "Campo " + el1.id + " está diferente do Campo " + el2.id + ".\n";
+        } else {
+            return "";
+        }
+    }
+
+    function calcularreserva(){
+        let valor_diaria = 149;
+        let valor_adic = 60;
+        let chegada = new Date(document.getElementById('chegada').value);
+        let saida = new Date(document.getElementById('saida').value);
+        let quartos = document.getElementById('quantquartos').value;
+        let hospedes = document.getElementById('quanthospedes').value;
+        let diarias = Math.ceil((saida - chegada) / 1000 / 3600 / 24);
+        let valor_reserva = valor_diaria * quartos;
+        if (hospedes > quartos){ valor_reserva += (hospedes - quartos) * valor_adic; }
+        valor_reserva = diarias * valor_reserva;
+        alert("Valor Total: R$ " + valor_reserva);
+    }
+
+</script>
+
+</body>
+</html>
+
